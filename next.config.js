@@ -1,12 +1,15 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
+
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   // Next.js 15 already has React Server Components enabled by default
   // Configure webpack to properly resolve module paths
   webpack: (config) => {
-    // This helps with resolving the @/ imports
-    config.resolve.modules.push('.');
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname),
+    };
     return config;
   },
   transpilePackages: [
